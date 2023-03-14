@@ -59,6 +59,7 @@ router.delete('/:id', async (req, res) => {
         await fs.promises.writeFile('./data/db.json', JSON.stringify(notes));
         console.info(`${req.method} request received to delete item`);
         res.send();
+        window.location.reload();
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
