@@ -41,12 +41,12 @@ router.post('/notes', async (req, res) => {
             })
             res.status(200).json();
         }
-        }
-        // await fs.promises.writeFile('./db/db.json', JSON.stringify(notes));
-         catch (err) {
-            console.error(err);
-            res.status(500).send('Server Error');
-        }
+            }
+            // await fs.promises.writeFile('./db/db.json', JSON.stringify(notes));
+            catch (err) {
+                console.error(err);
+                res.status(500).send('Server Error');
+            }
     }
 
 );
