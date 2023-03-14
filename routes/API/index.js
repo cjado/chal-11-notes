@@ -56,7 +56,7 @@ router.delete('/:id', async (req, res) => {
         const result = db.filter((note) => note.id === req.params.id)[0];
         const index = db.findIndex(note => note.id === result.id);
         db.splice(index, 1);
-        await fs.promises.writeFile('./data/db.json', JSON.stringify(notes));
+        await fs.promises.writeFile('./db/db.json', JSON.stringify(notes));
         console.info(`${req.method} request received to delete item`);
         res.send();
     } catch (err) {
