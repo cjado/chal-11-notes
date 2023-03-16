@@ -6,8 +6,14 @@ const { v4: uuidv4 } = require('uuid');
 
 router.get('/notes', (req, res) => {
     try {
-        let currentNotes = db;
-        res.status(200).json(currentNotes)
+        fs.readFile('./db/db.json', "utf8", (err, data) => {
+            if (err) {
+                console.log(err)
+            }
+            let noteData = JSON.parse(data)
+            res.status(200).json(noteData)
+        });
+
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
@@ -41,22 +47,22 @@ router.post('/notes', async (req, res) => {
             })
             res.status(200).json();
         }
-            }
-            // await fs.promises.writeFile('./db/db.json', JSON.stringify(notes));
-            catch (err) {
-                console.error(err);
-                res.status(500).send('Server Error');
-            }
+        }
+        // await fs.promises.writeFile('./db/db.json', JSON.stringify(notes));
+         catch (err) {
+            console.error(err);
+            res.status(500).send('Server Error');
+        }
     }
 
 );
 
-router.delete('/:id', async (req, res) => {
+router.delete('/notes/:id', async (req, res) => {
     try {
         const result = db.filter((note) => note.id === req.params.id)[0];
         const index = db.findIndex(note => note.id === result.id);
         db.splice(index, 1);
-        await fs.promises.writeFile('./db/db.json', JSON.stringify(notes));
+        await fs.promises.writeFile('./db/db.json', JSON.stringify(db));
         console.info(`${req.method} request received to delete item`);
         res.send();
     } catch (err) {
